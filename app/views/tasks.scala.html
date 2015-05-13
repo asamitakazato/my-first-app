@@ -1,9 +1,13 @@
-@(taskList: List[Task])(now: String)(cal: Integer)
-
+@(taskList: List[Task],taskForm: Form[Task])
 
 @common("今もってるタスク"){
 
 <h2>Add a new task</h2>
+
+<!-- nameに関するエラーがあったら表示する -->
+@for(error <- taskForm("name").errors) {
+	<p>@Messages(error.message)</p>
+	}
 
 <form action="@routes.Application.createTask()" method="POST">
     <p>
@@ -17,12 +21,7 @@
 	@if(taskList.isEmpty()){
 		Task は一件もありません
 		}else{
-		今回作ったタスクは「@now」です。
-		<br>
-		これまでに作ったタスクの数は @cal です。<br>
-		@taskList.size<br>
-		@Task.find.findRowCount()
-		<br>
+
 		<ul>
 		@for(task <- taskList){
 			<li>@task.name</li>

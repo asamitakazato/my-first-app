@@ -19,30 +19,22 @@ public class Application extends Controller {
     	return ok(index.render("Your new application is ready."));
     }
 
+    public static Form<Task> taskForm = Form.form(Task.class);
+
     public static Result tasks() {
 
-    	Random rnd = new Random();
-
-    	Task task = new Task();
-    	task.name = "ピザを"+ rnd.nextInt(10) + "枚食べる";
-    	task.period = new Date();
-    	task.save();
-
-
-    	List<Task> taskList = Task.find.where().eq("name", "ピザを5枚食べる").findList();
-    	String now =task.name;
-    	int cal = taskList.size();
-
-    	return ok(tasks.render(taskList,now,cal));
-
+    	List<Task> taskList = Task.find.all();
+        return ok(tasks.render(taskList, taskForm));
     }
 
 
+
     public static Result createTask(){
-    	Form<Task> form = Form.form(Task.class).bindFromRequest();
+    	Form<Task> form = taskForm.bindFromRequest();
 
     	if(form.hasErrors()){
-    		return badRequest(form.errorsAsJson());
+    		List<Task> taskList = Task.find.all();
+    		return badRequest(tasks.render(taskList, form));
     	}else{
     		Task newTask = form.get();
     		newTask.save();
