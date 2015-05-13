@@ -2,6 +2,16 @@
 
 
 @common("今もってるタスク"){
+
+<h2>Add a new task</h2>
+
+<form action="@routes.Application.createTask()" method="POST">
+    <p>
+        name: <input type="text" name="name" />
+    </p>
+    <input type="submit" value="Create" />
+</form>
+
 	<h1>タスク一覧</h1>
 
 	@if(taskList.isEmpty()){
@@ -9,13 +19,16 @@
 		}else{
 		今回作ったタスクは「@now」です。
 		<br>
-		これまでに作ったタスクの数は @cal です。
+		これまでに作ったタスクの数は @cal です。<br>
+		@taskList.size<br>
+		@Task.find.findRowCount()
 		<br>
 		<ul>
 		@for(task <- taskList){
 			<li>@task.name</li>
 			}
 		</ul>
-
 	}
+
+
 }
