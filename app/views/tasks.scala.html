@@ -1,0 +1,17 @@
+@(taskList: List[Task])
+
+
+@common("今もってるタスク"){
+	<h1>タスク一覧</h1>
+
+	@if(taskList.isEmpty()){
+		Task は一件もありません
+		}else{
+		<ul>
+		@for(task <- taskList){
+			<li>@task.name</li>
+			}
+		</ul>
+
+	}
+}
