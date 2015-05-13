@@ -1,4 +1,4 @@
-@(taskList: List[Task])
+@(taskList: List[Task])(now: String)(cal: Integer)
 
 
 @common("今もってるタスク"){
@@ -7,6 +7,10 @@
 	@if(taskList.isEmpty()){
 		Task は一件もありません
 		}else{
+		今回作ったタスクは「@now」です。
+		<br>
+		これまでに作ったタスクの数は @cal です。
+		<br>
 		<ul>
 		@for(task <- taskList){
 			<li>@task.name</li>

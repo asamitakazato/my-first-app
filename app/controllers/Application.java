@@ -2,9 +2,9 @@ package controllers;
 
 import models.Task;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -18,18 +18,19 @@ public class Application extends Controller {
 
     public static Result tasks() {
 
+    	Random rnd = new Random();
+
     	Task task = new Task();
-    	task.name = "Pizzaを食べる";
+    	task.name = "ピザを"+ rnd.nextInt(10) + "枚食べる";
     	task.period = new Date();
     	task.save();
 
-    	task.name = "やっぱり唐揚げもいい";
-    	task.update();
-
-
 
     	List<Task> taskList = Task.find.all();
-    	return ok(tasks.render(taskList));
+    	String now =task.name;
+    	int cal = taskList.size();
+
+    	return ok(tasks.render(taskList,now,cal));
 
     }
 
